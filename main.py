@@ -52,6 +52,10 @@ def validate(text):
             raise ValueError(
                 f"line {i} must end with sentence punctuation"
             )
+        if ". " in line or "! " in line or "? " in line:
+            raise ValueError(
+                f"line {i} must be a single sentence"
+            )
     return text
 
 
@@ -66,6 +70,8 @@ def self_test():
         ("trailing \nb.", "trailing whitespace"),
         ("a.\n b.", "leading whitespace on line 2"),
         ("no punctuation\nyes.", "line 1 without sentence punctuation"),
+        ("Two sentences here. Really.\nSecond line.",
+         "two sentences in line 1"),
         ("\n", "only a newline"),
     ]
     for text, label in cases:
